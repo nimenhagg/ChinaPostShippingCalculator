@@ -819,6 +819,9 @@ fun WeightInputCard(
                 Text("限重: ${maxWeightGrams}g", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
 
+            val weight = weightInput.toDoubleOrNull() ?: 0.0
+            val isOverLimit = weight > maxWeightGrams
+
             OutlinedTextField(
                 value = weightInput,
                 onValueChange = onWeightChange,
@@ -826,9 +829,26 @@ fun WeightInputCard(
                 trailingIcon = { Text("g ", fontWeight = FontWeight.Bold) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true,
+                isError = isOverLimit,
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(12.dp)
             )
+
+            if (isOverLimit) {
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = "⚠️ 重量 ${weight}g 已超出最高限重 ${maxWeightGrams}g！",
+                        color = MaterialTheme.colorScheme.onErrorContainer,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                }
+            }
 
             val presets = listOf("15", "20", "30", "50", "100", "200", "500")
             Row(

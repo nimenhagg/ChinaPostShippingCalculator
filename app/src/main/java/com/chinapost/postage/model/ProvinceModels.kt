@@ -159,7 +159,7 @@ object ChinaProvinces {
     }
 
     /**
-     * 官方附录十二：国内特快专递(EMS)分省、区、市计费分区推导
+     * 现行中国邮政特快专递(EMS)分区推导（基于最新官方 dey.11185.cn 计费实测）
      */
     fun resolveEmsZone(origin: String, dest: String, isLocalCity: Boolean): DestinationZone {
         if (isLocalCity) {
@@ -168,41 +168,15 @@ object ChinaProvinces {
         if (origin == dest) {
             return DestinationZone.SAME_PROVINCE
         }
-        // 五区：西藏、新疆（偏远跨省统一五区，续重17元）
+        // 五区：西藏、新疆（偏远跨省统一五区，首重24元，续重28元/kg）
         if (dest == "西藏" || dest == "新疆" || origin == "西藏" || origin == "新疆") {
             return DestinationZone.ZONE_REMOTE
         }
-        // 河北特快专递分省标准（附录十二）：
-        if (origin == "河北") {
-            return when (dest) {
-                "北京", "天津", "山西", "内蒙古", "山东", "河南" -> DestinationZone.SAME_PROVINCE // 一区 (4元)
-                "辽宁", "吉林", "黑龙江", "上海", "江苏", "浙江", "安徽", "江西", "湖北", "湖南", "四川", "重庆", "陕西", "甘肃", "青海", "宁夏" -> DestinationZone.ZONE_NEAR // 二区 (6元)
-                "福建", "广东", "贵州", "海南", "云南" -> DestinationZone.ZONE_MIDDLE // 三区 (9元)
-                "广西" -> DestinationZone.ZONE_FAR // 四区 (10元)
-                else -> DestinationZone.ZONE_MIDDLE
-            }
-        }
-        // 北京特快专递分省标准：
-        if (origin == "北京") {
-            return when (dest) {
-                "天津", "河北", "内蒙古", "山东" -> DestinationZone.SAME_PROVINCE
-                "山西", "辽宁", "吉林", "黑龙江", "上海", "江苏", "浙江", "安徽", "江西", "河南", "湖北", "湖南", "陕西", "甘肃", "宁夏" -> DestinationZone.ZONE_NEAR
-                "福建", "广东", "四川", "重庆", "青海" -> DestinationZone.ZONE_MIDDLE
-                "广西", "海南", "贵州", "云南" -> DestinationZone.ZONE_FAR
-                else -> DestinationZone.ZONE_MIDDLE
-            }
-        }
-        // 通用EMS分区判定（依据距离与省际区位）：
-        if (ZONE_FOUR_PROVINCES.contains(dest) || ZONE_FOUR_PROVINCES.contains(origin)) {
-            val neighbors = ADJACENT_MAP[origin] ?: emptySet()
-            if (!neighbors.contains(dest)) {
-                return DestinationZone.ZONE_FAR
-            }
-        }
-        val neighbors = ADJACENT_MAP[origin] ?: emptySet()
-        if (neighbors.contains(dest)) {
+        // 二区：邻省核心紧密经济圈（如京津冀互相寄递，首重14元，续重2元/kg）
+        if (isCoreNeighbor(origin, dest)) {
             return DestinationZone.ZONE_NEAR
         }
+        // 三区/标准跨省：全国一般跨省（如河北到四川、广东、上海等，首重21元，续重12元/kg）
         return DestinationZone.ZONE_MIDDLE
     }
 

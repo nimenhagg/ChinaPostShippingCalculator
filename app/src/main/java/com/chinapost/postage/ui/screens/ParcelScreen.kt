@@ -340,11 +340,28 @@ fun ParcelScreen(modifier: Modifier = Modifier) {
                     trailingIcon = { Text("kg ", fontWeight = FontWeight.Bold) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     singleLine = true,
+                    isError = actualWeight > selectedService.maxWeightKg,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp)
                 )
 
-                val presets = listOf("0.5", "1.0", "2.0", "3.0", "5.0", "10.0")
+                if (actualWeight > selectedService.maxWeightKg) {
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer),
+                        shape = RoundedCornerShape(8.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "⚠️ 重量 ${actualWeight}kg 已超出【${selectedService.shortName}】的 ${selectedService.maxWeightKg}kg 上限！请核实重量或切换业务。",
+                            color = MaterialTheme.colorScheme.onErrorContainer,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier.padding(10.dp)
+                        )
+                    }
+                }
+
+                val presets = listOf("0.5", "1.0", "3.0", "5.0", "10.0", "15.0")
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(6.dp)

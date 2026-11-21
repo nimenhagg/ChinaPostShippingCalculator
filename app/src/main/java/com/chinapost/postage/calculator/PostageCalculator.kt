@@ -417,7 +417,7 @@ object PostageCalculator {
                 }
 
                 if (rawChargeable > 50.0) {
-                    remarks.add("普通包裹最高限重50kg，当前重量已超限")
+                    remarks.add("普通包裹最高限重50kg，当前重量 ${rawChargeable}kg 已超出上限！")
                 }
             }
 
@@ -464,36 +464,36 @@ object PostageCalculator {
                 }
 
                 if (rawChargeable > 20.0) {
-                    remarks.add("快递包裹最高限重20kg，超重请改选普通包裹（限重50kg）")
+                    remarks.add("快递包裹最高限重20kg，当前重量 ${rawChargeable}kg 已超出上限！超重请改选普通包裹（限重50kg）")
                 }
             }
 
             ParcelServiceType.EMS_STANDARD -> {
                 val effectiveZone = ChinaProvinces.resolveEmsZone(originProvince, destProvince, isLocalCity)
-                // 官方附表11-1及附录十二：起重500g统一20元，按500g进位计费
-                val units500g = ceil(rawChargeable / 0.5).toInt().coerceAtLeast(1)
-                chargeableWeightKg = units500g * 0.5
-                baseFreight = 20.00
+                // 现行中国邮政官方国内特快专递标准（1kg首重 + 1kg进位续重）
+                val units1kg = ceil(rawChargeable).toInt().coerceAtLeast(1)
+                chargeableWeightKg = units1kg.toDouble()
 
-                val extraRatePer500g = when (effectiveZone) {
+                val (firstCost, extraRatePerKg) = when (effectiveZone) {
                     DestinationZone.LOCAL_CITY,
-                    DestinationZone.SAME_PROVINCE -> 4.00 // 一区：4元
-                    DestinationZone.ZONE_NEAR -> 6.00     // 二区：6元 (如河北寄四川)
-                    DestinationZone.ZONE_MIDDLE -> 9.00   // 三区：9元
-                    DestinationZone.ZONE_FAR -> 10.00     // 四区：10元
-                    DestinationZone.ZONE_REMOTE -> 17.00  // 五区：17元 (西藏、新疆)
+                    DestinationZone.SAME_PROVINCE -> Pair(12.00, 2.00) // 一区（省内/同城）：首重12元，续重2元/kg
+                    DestinationZone.ZONE_NEAR -> Pair(14.00, 2.00)     // 二区（邻省/周边经济圈）：首重14元，续重2元/kg
+                    DestinationZone.ZONE_MIDDLE,
+                    DestinationZone.ZONE_FAR -> Pair(21.00, 12.00)     // 三区/四区（跨省标快）：首重21元，续重12元/kg
+                    DestinationZone.ZONE_REMOTE -> Pair(24.00, 28.00)  // 五区（西藏、新疆偏远）：首重24元，续重28元/kg
                 }
 
-                if (units500g > 1) {
-                    val extraUnits = units500g - 1
-                    extraFreight = extraUnits * extraRatePer500g
-                    extraDetails = "首重500g(20元) + 续重${extraUnits}个500g × ${extraRatePer500g}元 = ${String.format("%.2f", extraFreight)}元【${effectiveZone.displayName}】"
+                baseFreight = firstCost
+                if (units1kg > 1) {
+                    val extraUnits = units1kg - 1
+                    extraFreight = extraUnits * extraRatePerKg
+                    extraDetails = "首重1kg(${firstCost}元) + 续重${extraUnits}kg × ${extraRatePerKg}元 = ${String.format("%.2f", extraFreight)}元【${effectiveZone.displayName}】"
                 } else {
-                    extraDetails = "首重500g以内：20元【${effectiveZone.displayName}】"
+                    extraDetails = "首重1kg以内：${firstCost}元【${effectiveZone.displayName}】"
                 }
 
                 if (rawChargeable > 40.0) {
-                    remarks.add("EMS特快最高限重40kg")
+                    remarks.add("国内特快专递最高限重40kg，当前重量 ${rawChargeable}kg 已超出上限！")
                 }
             }
         }
