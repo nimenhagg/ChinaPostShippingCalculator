@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Envelope Drop Shadow -->
+    <path
+        android:fillColor="#25002010"
+        android:pathData="M 30,35 L 76,35 A 6,6 0 0 1 82,41 L 82,68 A 6,6 0 0 1 76,74 L 30,74 A 6,6 0 0 1 24,68 L 24,41 A 6,6 0 0 1 30,35 Z" />
+
+    <!-- Main Envelope Body -->
+    <path
+        android:fillColor="#F8FBF9"
+        android:pathData="M 29,33 L 75,33 A 5,5 0 0 1 80,38 L 80,66 A 5,5 0 0 1 75,71 L 29,71 A 5,5 0 0 1 24,66 L 24,38 A 5,5 0 0 1 29,33 Z" />
+
+    <!-- Address Lines on Left -->
+    <path
+        android:strokeColor="#A0C6B0"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:pathData="M 30,50 L 48,50" />
+    <path
+        android:strokeColor="#C5DDD0"
+        android:strokeWidth="2"
+        android:strokeLineCap="round"
+        android:pathData="M 30,56 L 44,56" />
+    <path
+        android:strokeColor="#D5E8DE"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M 30,62 L 39,62" />
+
+    <!-- Bottom Diagonals Fold Lines -->
+    <path
+        android:strokeColor="#E2EBE5"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M 25,70 L 44,53" />
+    <path
+        android:strokeColor="#E2EBE5"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M 79,70 L 60,53" />
+
+    <!-- Top Flap Fold -->
+    <path
+        android:strokeColor="#D2DDD6"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M 24,34 L 52,56 L 80,34" />
+
+    <!-- Postmark Cancellation Waves -->
+    <path
+        android:strokeColor="#80D6B0"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"
+        android:pathData="M 44,40 Q 48,38 52,40 T 60,40" />
+    <path
+        android:strokeColor="#80D6B0"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"
+        android:pathData="M 44,43 Q 48,41 52,43 T 60,43" />
+    <path
+        android:strokeColor="#80D6B0"
+        android:strokeWidth="1.2"
+        android:strokeLineCap="round"
+        android:pathData="M 44,46 Q 48,44 52,46 T 60,46" />
+
+    <!-- Postage Stamp -->
+    <path
+        android:fillColor="#FFB800"
+        android:pathData="M 64,36 H 77 V 49 H 64 Z" />
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1"
+        android:pathData="M 65.5,37.5 H 75.5 V 47.5 H 65.5 Z" />
+    <!-- Postal Stamp Emblem (Mini Star / Post Symbol) -->
+    <path
+        android:fillColor="#006030"
+        android:pathData="M 70.5,40.5 L 71.5,42.8 L 74,43 L 72,44.7 L 72.7,47 L 70.5,45.7 L 68.3,47 L 69,44.7 L 67,43 L 69.5,42.8 Z" />
+
+    <!-- Calculation / Price Badge Outer Rim Shadow -->
+    <path
+        android:fillColor="#30002010"
+        android:pathData="M 68,50 A 17,17 0 1 1 67.9,50 Z" />
+    <!-- Calculation / Price Badge Outer White Ring -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M 68,49 A 16,16 0 1 1 67.9,49 Z" />
+    <!-- Calculation / Price Badge Golden Fill -->
+    <path
+        android:fillColor="#FFB800"
+        android:pathData="M 68,51 A 14,14 0 1 1 67.9,51 Z" />
+
+    <!-- Chinese Currency Symbol '¥' in Deep Postal Green -->
+    <!-- Left upper branch -->
+    <path
+        android:strokeColor="#004D25"
+        android:strokeWidth="2.4"
+        android:strokeLineCap="round"
+        android:pathData="M 62,58 L 68,65" />
+    <!-- Right upper branch -->
+    <path
+        android:strokeColor="#004D25"
+        android:strokeWidth="2.4"
+        android:strokeLineCap="round"
+        android:pathData="M 74,58 L 68,65" />
+    <!-- Vertical stem -->
+    <path
+        android:strokeColor="#004D25"
+        android:strokeWidth="2.4"
+        android:strokeLineCap="round"
+        android:pathData="M 68,65 L 68,74" />
+    <!-- Upper horizontal crossbar -->
+    <path
+        android:strokeColor="#004D25"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:pathData="M 63.5,64.5 L 72.5,64.5" />
+    <!-- Lower horizontal crossbar -->
+    <path
+        android:strokeColor="#004D25"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:pathData="M 64,68.5 L 72,68.5" />
+
+</vector>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="post_green">#006B3E</color>
+    <color name="post_green_dark">#004D2C</color>
+    <color name="post_yellow">#FFC000</color>
+</resources>
